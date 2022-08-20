@@ -15,7 +15,7 @@ const Navbar = () => {
           <li className="hover:text-white cursor-pointer">Add Device</li>
         </Link>
       </ul>
-      <h2 className="bgGradient px-2 py-1.5 rounded flex items-center text-mainBg font-bold cursor-pointer">
+      <h2 className="bgGradient px-4 py-1.5 rounded flex items-center text-mainBg font-bold cursor-pointer">
         Call 911
       </h2>
     </nav>
