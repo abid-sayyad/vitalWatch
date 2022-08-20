@@ -5,7 +5,7 @@ import { DeviceDataType } from "../../types";
 const DashboardCard: React.FC<DeviceDataType> = (props) => {
   const { _id, deviceAlias, deviceID, status } = props;
   return (
-    <Link href={`/miner/${_id}`} className="">
+    <Link href={`/miner/${deviceID}`} className="">
       <div className={`${status}`}>
         <div
           className={`flex-col flex  p-4 border rounded-md main cursor-pointer`}

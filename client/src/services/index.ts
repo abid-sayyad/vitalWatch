@@ -1,7 +1,7 @@
 import axios from "axios";
-import { API, toastConfig } from "../config";
 import { toast } from "react-hot-toast";
 import { BloodGroupType, DeviceDataType } from "../types";
+import { API, toastConfig } from "../config";
 
 export const addDeviceService = async (
   formData: {
@@ -41,9 +41,10 @@ export const getAllDevicesService = async () => {
 export const getMinerService = async (id: string) => {
   try {
     const res = await axios.get(`${API}/device/user/${id}`);
+    console.log({ res });
     return res;
   } catch (error) {
-    toast.error("Failed to fetch data", toastConfig);
+    window.location.replace(`${window.location.origin}`);
     console.log("get miner data error ", error);
   }
 };
