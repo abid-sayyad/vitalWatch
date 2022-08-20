@@ -66,3 +66,15 @@ export const DeviceData = async (
     );
   }
 };
+
+export const getDeviceData = async (userString: string) => {
+  const db = await DatabaseService.getInstance().getDb("devices", "vitalWatch");
+  let userData;
+  if (userString === "all") {
+    userData = await db.find({}).toArray();
+  } else {
+    userData = await db.find({ deviceID: userString }).toArray();
+  }
+
+  return userData;
+};

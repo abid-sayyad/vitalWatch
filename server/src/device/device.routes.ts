@@ -6,7 +6,7 @@ import {
   DeviceDataRequest,
   DeviceDataRequestSchema,
 } from "./device.schema";
-import { AddDevice, DeviceData } from "./device.service";
+import { AddDevice, DeviceData, getDeviceData } from "./device.service";
 
 const router = Router();
 
@@ -25,6 +25,15 @@ const handleData = async (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({
       status: `Date Updated at ${Date.now()}`,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+const handleUsers = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { userSlug } = req.params;
+    const data = await getDeviceData(userSlug);
+    res.status(200).json({ data: data });
   } catch (err) {
     next(err);
   }
@@ -60,6 +69,6 @@ router.post(
   handleData
 );
 
-// router.get("/user", validateQuery("query"));
+router.get("/user/:userSlug", handleUsers);
 
 export default router;
