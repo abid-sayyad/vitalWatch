@@ -2,7 +2,7 @@ import React from "react";
 
 const Device: React.FC = () => {
   return (
-    <form className="border border-gray-400 border-2  rounded-lg w-[600px] mx-auto sm:mt-[5rem] p-2.5">
+    <form className=" border-gray-400 border-2  rounded-lg  mx-auto sm:mt-[5rem] p-2.5 w-[90vw] sm:w-[600px] mt-[3rem] ">
       <h1 className="text-2xl my-2 font-semibold mb-6">＋ Add a Device</h1>
       <div className="mb-6">
         <label
