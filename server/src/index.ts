@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import cors from "cors";
 import errorHandler from "./errors/error.handlers";
 import { DatabaseService } from "./services/database.service";
+import DeviceRoutes from "./device/device.routes";
 
 config();
 
@@ -10,6 +11,8 @@ const app = Express();
 app.use(Express.json());
 app.use(cors());
 app.set("trust proxy", true);
+
+app.use("/api/v1/device", DeviceRoutes);
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.json({
