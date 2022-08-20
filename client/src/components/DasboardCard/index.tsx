@@ -1,34 +1,37 @@
 import React from "react";
 import { Link, Route } from "wouter";
+import { DeviceDataType } from "../../types";
 
-type PropT = {
-  id: string;
-  alias: string;
-  status: "good" | "warn" | "danger";
-};
-
-const DashboardCard: React.FC<PropT> = ({ status, id, alias }) => {
+const DashboardCard: React.FC<DeviceDataType> = (props) => {
+  const { _id, deviceAlias, deviceID, status } = props;
   return (
-    <Link href={`/miner/${id}`} className="">
+    <Link href={`/miner/${_id}`} className="">
       <div className={`${status}`}>
         <div
           className={`flex-col flex  p-4 border rounded-md main cursor-pointer`}
         >
-          <h1 className="text-2xl ">{alias}</h1>
-          <h2>ID: {id}</h2>
-
+          <h1 className="text-2xl ">{deviceAlias}</h1>
+          <h2>ID: {deviceID}</h2>
           <span className=" flex items-center justify-start">
-            Status: <Status status={status} />
+            Device is{" "}
+            {status ? (
+              <Status status={"online"} key={deviceID} />
+            ) : (
+              <Status status={"offline"} key={deviceID} />
+            )}
           </span>
-        </div>{" "}
+          <span className=" flex items-center justify-start">
+            Status : <Status status={"good"} key={deviceID} />
+          </span>
+        </div>
       </div>
     </Link>
   );
 };
 
-const Status: React.FC<{ status: "good" | "warn" | "danger" }> = ({
-  status,
-}) => {
+const Status: React.FC<{
+  status: "good" | "warn" | "danger" | "online" | "offline";
+}> = ({ status }) => {
   return (
     <>
       {status === "good" && (
@@ -47,6 +50,18 @@ const Status: React.FC<{ status: "good" | "warn" | "danger" }> = ({
         <>
           <div className=" flex items-center justify-center mx-2 h-[0.5rem] w-[0.5rem] rounded-full bg-red-500"></div>
           <p className="text-red-500">Danger</p>
+        </>
+      )}
+      {status === "online" && (
+        <>
+          <div className=" flex items-center justify-center mx-2 h-[0.5rem] w-[0.5rem] rounded-full bg-blue-500"></div>
+          <p className="text-blue-500">Online</p>
+        </>
+      )}
+      {status === "offline" && (
+        <>
+          <div className=" flex items-center justify-center mx-2 h-[0.5rem] w-[0.5rem] rounded-full bg-gray-500"></div>
+          <p className="text-gray-500">Offline</p>
         </>
       )}
     </>

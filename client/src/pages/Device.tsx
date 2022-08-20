@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "react-hot-toast";
 import { toastConfig } from "../config";
-import { addDeviceService } from "../services/device";
+import { addDeviceService } from "../services";
 
 const Device: React.FC = () => {
 
