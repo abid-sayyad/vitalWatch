@@ -5,7 +5,7 @@ const errorHandler =
     if (err?.errorCode) {
       res.status(err.errorCode).json({
         success: false,
-        message: `ErrorName: ${err.status}`,
+        message: `${err.status}`,
       });
     } else {
       res.status(500).json({
