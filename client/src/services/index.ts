@@ -37,3 +37,13 @@ export const getAllDevicesService = async () => {
     console.log("get all devices error ", error);
   }
 };
+
+export const getMinerService = async (id: string) => {
+  try {
+    const res = await axios.get(`${API}/device/user/${id}`);
+    return res;
+  } catch (error) {
+    toast.error("Failed to fetch data", toastConfig);
+    console.log("get miner data error ", error);
+  }
+};
