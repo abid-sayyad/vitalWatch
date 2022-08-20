@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DashboardCard from "../components/DasboardCard/index";
+import { getAllDevicesService } from "../services";
+import { DeviceDataType } from "../types";
+import Loading from "../components/Loading/index";
 
 const Home: React.FC = () => {
+  const [devices, setDevices] = useState<DeviceDataType[]>();
+  const getDevices = async () => {
+    const data = await getAllDevicesService();
+    setDevices(data?.data as DeviceDataType[]);
+  };
+  useEffect(() => {
+    getDevices();
+  }, []);
+
   return (
     <div className="">
       <input
@@ -25,27 +37,18 @@ const Home: React.FC = () => {
           <p className=" text-xl">Danger</p>
         </div>
       </section>
-      <section className="grid grid-cols-2 sm:grid-cols-5 col gap-10">
-        <DashboardCard
-          alias="Michael Scarn"
-          id="451346352745"
-          status="danger"
-        />
-        <DashboardCard alias="Jake Peralta" id="74367457467" status="warn" />
-        <DashboardCard alias="Ted Mosby" id="5474357567567" status="good" />
-        <DashboardCard
-          alias="Barney Stintson"
-          id="7347367467"
-          status="danger"
-        />
-        <DashboardCard alias="Joey Tribbiani" id="76436745674" status="good" />
-        <DashboardCard
-          alias="Chandler Bing"
-          id="746746743674567"
-          status="danger"
-        />
-        <DashboardCard alias="Saul Goodman" id="46743764357457" status="warn" />
-      </section>
+
+      {devices ? (
+        <section className="grid grid-cols-2 sm:grid-cols-5 col gap-10  mx-[5px] sm:mx-2">
+          {devices?.map((device) => (
+            <DashboardCard {...device} key={device._id} />
+          ))}{" "}
+        </section>
+      ) : (
+        <div className="w-10 mx-auto mt-10">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 };
