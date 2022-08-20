@@ -9,18 +9,18 @@ const Navbar = () => {
       </h1>
       <ul className="sm:flex items-center justify-around sm:w-[600px]">
         <Link href="/">
-          <li className="text-xs sm:text-md hover:text-white cursor-pointer">
+          <li className="text-xs sm:text-base hover:text-white cursor-pointer">
             Dashboard
           </li>
         </Link>
         <Link href="/device">
-          <li className="text-xs sm:text-md hover:text-white cursor-pointer">
+          <li className="text-xs sm:text-base hover:text-white cursor-pointer">
             Add Device
           </li>
         </Link>
       </ul>
-      <h2 className="text-xs sm:text-md bgGradient px-4 py-1.5 rounded flex items-center text-mainBg font-bold cursor-pointer">
-        Call 911 
+      <h2 className="text-xs sm:text-base bgGradient px-4 py-1.5 rounded flex items-center text-mainBg font-bold cursor-pointer">
+        Call 911
       </h2>
     </nav>
   );
