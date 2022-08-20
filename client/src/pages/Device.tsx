@@ -14,7 +14,7 @@ const Device: React.FC = () => {
         <input
           type="text"
           id="id"
-          className="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+          className="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-mainHighlight focus:border-mainHighlight"
           placeholder="VitalWatch device id "
           required
         />
@@ -31,7 +31,7 @@ const Device: React.FC = () => {
         <input
           type="text"
           id="alias"
-          className="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+          className="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-mainHighlight focus:border-mainHighlight"
           placeholder="Michael Scarn "
           required
         />
@@ -51,7 +51,7 @@ const Device: React.FC = () => {
               type="number"
               min={0}
               id="height"
-              className="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+              className="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-mainHighlight focus:border-mainHighlight"
               placeholder="52 meters"
             />
           </div>
@@ -66,13 +66,13 @@ const Device: React.FC = () => {
               type="number"
               min={0}
               id="weight"
-              className="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+              className="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-mainHighlight focus:border-mainHighlight"
               placeholder="77 kg"
             />
           </div>
         </div>
       </div>
-      <button className="mt-10 border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-slate-300 hover:text-white cursor-pointer focus:ring-blue-500 focus:border-blue-500">
+      <button className="mt-10 border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-slate-300 hover:text-white cursor-pointer focus:ring-mainHighlight focus:border-mainHighlight">
         Submit form
       </button>
     </form>
