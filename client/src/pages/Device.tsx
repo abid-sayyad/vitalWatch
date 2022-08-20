@@ -4,26 +4,33 @@ import { toastConfig } from "../config";
 import { addDeviceService } from "../services/device";
 
 const Device: React.FC = () => {
+
   const submitHandler = async (e: any) => {
-    e.preventDefault();
-    const formData = {
-      deviceID: e.target.elements.id.value,
-      deviceAlias: e.target.elements.alias.value,
-      weight: e.target.elements.height.value,
-      height: e.target.elements.weight.value,
-      age: e.target.elements.age.value,
-      bloodGroup: e.target.elements.bloodGroup.value,
-    };
-    toast.promise(
-      addDeviceService(formData),
-      {
-        loading: "Saving Device...",
-        success: "Saved Device !",
-        error: "Failed to save Device",
-      },
-      toastConfig
-    );
+    try {
+      e.preventDefault();
+      const formData = {
+        deviceID: e.target.elements.id.value,
+        deviceAlias: e.target.elements.alias.value,
+        weight: e.target.elements.height.value,
+        height: e.target.elements.weight.value,
+        age: e.target.elements.age.value,
+        bloodGroup: e.target.elements.bloodGroup.value,
+      };
+      toast.promise(
+        addDeviceService(formData, e),
+        {
+          loading: "Saving Device...",
+          success: "Saved Device !",
+          error: "Failed to save Device",
+        },
+        toastConfig
+      );
+   
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   return (
     <form
       onSubmit={(e) => submitHandler(e)}
