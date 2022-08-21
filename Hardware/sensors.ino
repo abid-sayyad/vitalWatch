@@ -1,12 +1,35 @@
 #include <String.h>
+#include "DHT.h"
+#include <Wire.h>
+#include <Adafruit_MLX90614.h>
+#include <SoftwareSerial.h>
+#include <ArduinoJson.h>
+
+StaticJsonBuffer<200> jsonBuffer; 
+SoftwareSerial mySerial(9, 10);
+
+#define DHTPIN 2
+#define DHTTYPE DHT11
+
+char t[32];
+char deviceID[12] = "101";
 
 float sensorValueMQ135;
 float sensorValueMQ9;
- 
+
+DHT dht(DHTPIN, DHTTYPE);
+
+Adafruit_MLX90614 mlx = Adafruit_MLX90614();
+
 void setup()
 {
-  Serial1.begin(9600);               // the GPRS baud rate   
-  Serial.begin(9600);    // the GPRS baud rate 
+  mySerial.begin(9600);               // the GPRS baud rate   
+  Serial.begin(9600);    // the GPRS baud rate
+  Serial.println("Initializing..........");
+
+  dht.begin(); 
+  mlx.begin();
+  DynamicJsonBuffer jsonBuffer;
 }
  
 void loop()
@@ -15,89 +38,137 @@ void loop()
    sensorValueMQ9 = analogRead(1);       // read analog input pin 1 
    delay(100);   
          
-   Serial.print("\nAirQua(CO2/ NOx/ NH3/ S/ C6H6)=");
-   Serial.print(sensorValueMQ135);               // prints the value read
+   //Serial.print("\nAirQua(CO2/ NOx/ NH3/ S/ C6H6)=");
+   //Serial.print(sensorValueMQ135);               // prints the value read
 
-   Serial.print("\nAirQua(Inflamable gasses)=");
-   Serial.print(sensorValueMQ9);               // prints the value read
+   //Serial.print("\nAirQua(Inflamable gasses)=");
+   //Serial.print(sensorValueMQ9);               // prints the value read
 
-   
-  if (Serial1.available())
-    Serial.write(Serial1.read());
- 
-  Serial1.println("AT");
-  delay(1000);
- 
-  Serial1.println("AT+CPIN?");
-  delay(1000);
- 
-  Serial1.println("AT+CREG?");
-  delay(1000);
- 
-  Serial1.println("AT+CGATT?");
-  delay(1000);
- 
-  Serial1.println("AT+CIPSHUT");
-  delay(1000);
- 
-  Serial1.println("AT+CIPSTATUS");
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   delay(2000);
+  // Reading temperature or humidity takes about 250 milliseconds!
+  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+  float h = dht.readHumidity();
+  // Read temperature as Celsius (the default)
+  float t = dht.readTemperature();
+  // Read temperature as Fahrenheit (isFahrenheit = true)
+  float f = dht.readTemperature(true);
+
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(h) || isnan(t) || isnan(f)) {
+    Serial.println(F("Failed to read from DHT sensor!"));
+    return;
+  }
+
+  // Compute heat index in Fahrenheit (the default)
+  float hif = dht.computeHeatIndex(f, h);
+  // Compute heat index in Celsius (isFahreheit = false)
+  float hic = dht.computeHeatIndex(t, h, false);
+
+  //Serial.print(" \nHumidity: ");
+  //Serial.print(h);
+  //Serial.print("%");
+  //Serial.print("\nTemperature: ");
+  Serial.print(t);
+  Serial.print("C ");
+  //Serial.println(F("Heat Index "));
+  //Serial.print(f);
+  //Serial.print(F("F  Heat index: "));
+  //Serial.print(hic);
+  //Serial.print(F("C "));
+  //Serial.print(hif);
+  //Serial.println(F("F"));
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //Serial.print("Ambient = "); Serial.print(mlx.readAmbientTempC()); 
+  Serial.print("*C\tObject = "); Serial.print(mlx.readObjectTempC()); Serial.println("*C");
+  delay(500);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   delay(2000);
+  if (mySerial.available())
+    Serial.write(mySerial.read());
  
-  Serial1.println("AT+CIPMUX=0");
-  delay(2000);
- 
-  ShowSerialData();
- 
-  Serial1.println("AT+CSTT=\"bsnlnet\"");//start task and setting the APN,
+  mySerial.println("AT");
   delay(1000);
  
-  ShowSerialData();
- 
-  Serial1.println("AT+CIICR");//bring up wireless connection
-  delay(3000);
- 
-  ShowSerialData();
- 
-  Serial1.println("AT+CIFSR");//get local IP adress
-  delay(2000);
- 
-  ShowSerialData();
- 
-  Serial1.println("AT+CIPSPRT=0");
-  delay(3000);
- 
-  ShowSerialData();
-  
-  Serial1.println("AT+CIPSTART=\"TCP\",\"ADD DOMAIN ADDRESS",\"80\"");//start up the connection
+  mySerial.println("AT+SAPBR=3,1,\"Contype\",\"GPRS\"");
   delay(6000);
- 
   ShowSerialData();
  
-  Serial1.println("AT+CIPSEND");//begin send data to remote server
+  mySerial.println("AT+SAPBR=3,1,\"APN\",\"Jionet\"");//APN
+  delay(6000);
+  ShowSerialData();
+ 
+  mySerial.println("AT+SAPBR=1,1");
+  delay(6000);
+  ShowSerialData();
+ 
+  mySerial.println("AT+SAPBR=2,1");
+  delay(6000);
+  ShowSerialData();
+ 
+ 
+  mySerial.println("AT+HTTPINIT");
+  delay(6000);
+  ShowSerialData();
+ 
+  mySerial.println("AT+HTTPPARA=\"CID\",1");
+  delay(6000);
+  ShowSerialData();
+ 
+  StaticJsonBuffer<200> jsonBuffer;
+  JsonObject& object = jsonBuffer.createObject();
+  
+  object.set("deviceID",deviceID);
+  object.set("heartBeat",deviceID);
+  object.set("airQuality",deviceID);
+  object.set("temprature",sensorValueMQ135);
+  object.set("humidity",deviceID);
+  
+  JsonObject& location = object.createNestedObject("location");
+  location["longitude"] = deviceID;
+  location["latitude"] = deviceID;
+  location["timestamp"] = h;
+  
+  object.printTo(Serial);
+  Serial.println(" ");  
+  String sendtoserver;
+  object.prettyPrintTo(sendtoserver);
+  delay(4000);
+ 
+  mySerial.println("AT+HTTPPARA=\"URL\",\"https://1ef8-122-174-247-211.in.ngrok.io/api/v1/device/data\""); //Server address
   delay(4000);
   ShowSerialData();
-  
-  String str="" + String(sensorValueMQ135) +"&field2="+String(sensorValueMQ9);//ADD URL/API
-  Serial.println(str);
-  Serial1.println(str);//begin send data to remote server
-  
+ 
+  mySerial.println("AT+HTTPPARA=\"CONTENT\",\"application/json\"");
   delay(4000);
   ShowSerialData();
  
-  Serial1.println((char)26);//sending
-  delay(5000);//waitting for reply, important! the time is base on the condition of internet 
-  Serial1.println();
  
+  mySerial.println("AT+HTTPDATA=" + String(sendtoserver.length()) + ",100000");
+  Serial.println(sendtoserver);
+  delay(6000);
   ShowSerialData();
  
-  Serial1.println("AT+CIPSHUT");//close the connection
-  delay(100);
+  mySerial.println(sendtoserver);
+  delay(6000);
+  ShowSerialData;
+ 
+  mySerial.println("AT+HTTPACTION=1");
+  delay(6000);
+  ShowSerialData();
+ 
+  mySerial.println("AT+HTTPREAD");
+  delay(6000);
+  ShowSerialData();
+ 
+  mySerial.println("AT+HTTPTERM");
+  delay(10000);
   ShowSerialData();
 } 
 void ShowSerialData()
 {
-  while(Serial1.available()!=0)
-  Serial.write(Serial1.read());
+  while(mySerial.available()!=0)
+  Serial.write(mySerial.read());
   delay(5000); 
   
 }
