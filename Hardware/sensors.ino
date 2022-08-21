@@ -13,7 +13,11 @@ SoftwareSerial mySerial(9, 10);
 
 char t[32];
 char deviceID[12] = "101";
-
+char heartbeat = digitalRead(5);
+char airQuality;
+char humidity;
+char longitude;
+char latitude;
 float sensorValueMQ135;
 float sensorValueMQ9;
 
@@ -38,11 +42,11 @@ void loop()
    sensorValueMQ9 = analogRead(1);       // read analog input pin 1 
    delay(100);   
          
-   //Serial.print("\nAirQua(CO2/ NOx/ NH3/ S/ C6H6)=");
-   //Serial.print(sensorValueMQ135);               // prints the value read
+   Serial.print("\nAirQua(CO2/ NOx/ NH3/ S/ C6H6)=");
+   Serial.print(sensorValueMQ135);               // prints the value read
 
-   //Serial.print("\nAirQua(Inflamable gasses)=");
-   //Serial.print(sensorValueMQ9);               // prints the value read
+   Serial.print("\nAirQua(Inflamable gasses)=");
+   Serial.print(sensorValueMQ9);               // prints the value read
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   delay(2000);
@@ -119,14 +123,14 @@ void loop()
   JsonObject& object = jsonBuffer.createObject();
   
   object.set("deviceID",deviceID);
-  object.set("heartBeat",deviceID);
-  object.set("airQuality",deviceID);
+  object.set("heartBeat",heartbeat);
+  object.set("airQuality",airQuality);
   object.set("temprature",sensorValueMQ135);
-  object.set("humidity",deviceID);
+  object.set("humidity",humidity);
   
   JsonObject& location = object.createNestedObject("location");
-  location["longitude"] = deviceID;
-  location["latitude"] = deviceID;
+  location["longitude"] = longitude;
+  location["latitude"] = latitude;
   location["timestamp"] = h;
   
   object.printTo(Serial);
