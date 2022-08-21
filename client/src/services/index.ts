@@ -41,8 +41,7 @@ export const getAllDevicesService = async () => {
 export const getMinerService = async (id: string) => {
   try {
     const res = await axios.get(`${API}/device/user/${id}`);
-    console.log({ res });
-    return res;
+    return res?.data;
   } catch (error) {
     window.location.replace(`${window.location.origin}`);
     console.log("get miner data error ", error);
