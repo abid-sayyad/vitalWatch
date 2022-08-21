@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { BloodGroupType, DeviceDataType } from "../types";
+import { BloodGroupType, DeviceDataType } from "../types/types";
 import { API, toastConfig } from "../config";
 
 export const addDeviceService = async (

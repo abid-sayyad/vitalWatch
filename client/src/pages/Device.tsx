@@ -81,8 +81,9 @@ const Device: React.FC = () => {
               type="number"
               min={0}
               id="height"
+              step=".01"
               className="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-mainHighlight focus:border-mainHighlight"
-              placeholder="52 meters"
+              placeholder="1.8 meters"
             />
           </div>
           <div className="ml-5 ">

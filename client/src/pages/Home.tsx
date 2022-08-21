@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import DashboardCard from "../components/DasboardCard/index";
 import { getAllDevicesService } from "../services";
-import { DeviceDataType } from "../types";
+import { DeviceDataType } from "../types/types";
 import Loading from "../components/Loading/index";
 
 const Home: React.FC = () => {
-  const [devices, setDevices] = useState<DeviceDataType[]>();
+  const [devices, setDevices] = useState<DeviceDataType[] | null>(null);
   const getDevices = async () => {
     const data = await getAllDevicesService();
     setDevices(data?.data as DeviceDataType[]);
