@@ -21,6 +21,10 @@ const DashboardCard: React.FC<DeviceDataType> = (props) => {
                   props?.tempratureStatus === "high") && (
                   <Status status="danger" />
                 )}
+                {props?.airQualityIndex !== "Poor" &&
+                  props?.tempratureStatus !== "high" && (
+                    <Status status="good" />
+                  )}
               </>
             ) : (
               <Status status={"offline"} key={deviceID} />
@@ -40,7 +44,7 @@ const Status: React.FC<{
       {status === "good" && (
         <>
           <div className=" flex items-center justify-center mx-2 h-[0.5rem] w-[0.5rem] rounded-full bg-green-500"></div>
-          <p className="text-green-500">Good</p>
+          <p className="text-green-500">Healthy</p>
         </>
       )}
       {status === "warn" && (
