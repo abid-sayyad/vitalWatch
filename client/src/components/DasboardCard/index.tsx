@@ -8,7 +8,7 @@ const DashboardCard: React.FC<DeviceDataType> = (props) => {
     <Link href={status ? `/miner/${deviceID}` : "/"} className="">
       <div className={`${status}`}>
         <div
-          className={`flex-col flex  p-4 border rounded-md main cursor-pointer`}
+          className={`flex-col flex  p-4 border border-blue-500 rounded-md main cursor-pointer`}
         >
           <h1 className="text-2xl ">{deviceAlias}</h1>
           <h2>ID: {deviceID}</h2>
