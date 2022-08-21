@@ -4,7 +4,6 @@ import { toastConfig } from "../config";
 import { addDeviceService } from "../services";
 
 const Device: React.FC = () => {
-
   const submitHandler = async (e: any) => {
     try {
       e.preventDefault();
@@ -25,7 +24,6 @@ const Device: React.FC = () => {
         },
         toastConfig
       );
-   
     } catch (e) {
       console.log(e);
     }
@@ -34,7 +32,7 @@ const Device: React.FC = () => {
   return (
     <form
       onSubmit={(e) => submitHandler(e)}
-      className=" border-gray-400 border-2  rounded-lg  mx-auto sm:mt-[5rem] p-2.5 w-[90vw] sm:w-[600px] mt-[3rem] "
+      className=" border-cyan-600 border-2  rounded-lg  mx-auto sm:mt-[5rem] p-2.5 w-[90vw] sm:w-[600px] mt-[3rem] "
     >
       <h1 className="text-2xl my-2 font-semibold mb-6">＋ Add a Device</h1>
       <div className="mb-6">
@@ -83,8 +81,9 @@ const Device: React.FC = () => {
               type="number"
               min={0}
               id="height"
+              step=".01"
               className="border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-mainHighlight focus:border-mainHighlight"
-              placeholder="52 meters"
+              placeholder="1.8 meters"
             />
           </div>
           <div className="ml-5 ">
@@ -144,7 +143,7 @@ const Device: React.FC = () => {
           </div>
         </div>
       </div>
-      <button className="mt-10 border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-slate-300 hover:text-white cursor-pointer focus:ring-mainHighlight focus:border-mainHighlight">
+      <button className="mt-10 border text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-slate-300 hover:text-white cursor-pointer focus:ring-cyan-600  focus:border-cyan-600 ">
         Submit form
       </button>
     </form>

@@ -1,14 +1,14 @@
 import React from "react";
 import { Link, Route } from "wouter";
-import { DeviceDataType } from "../../types";
+import { DeviceDataType } from "../../types/types";
 
 const DashboardCard: React.FC<DeviceDataType> = (props) => {
   const { _id, deviceAlias, deviceID, status } = props;
   return (
-    <Link href={`/miner/${_id}`} className="">
+    <Link href={status ? `/miner/${deviceID}` : "/"} className="">
       <div className={`${status}`}>
         <div
-          className={`flex-col flex  p-4 border rounded-md main cursor-pointer`}
+          className={`flex-col flex  p-4 border border-blue-500 rounded-md main cursor-pointer`}
         >
           <h1 className="text-2xl ">{deviceAlias}</h1>
           <h2>ID: {deviceID}</h2>

@@ -12,6 +12,8 @@ export interface DeviceDataType {
   temprature: string;
   weight: string;
   _id: string;
+  airQualityIndex: string;
+  tempratureStatus: string;
 }
 export type LoactionType = {
   longitude: string;
