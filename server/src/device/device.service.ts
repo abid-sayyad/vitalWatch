@@ -24,6 +24,8 @@ export const AddDevice = async (
       age: age,
       bloodGroup: bloodGroup,
       status: false,
+      heartBeat: [],
+      airQuality: [],
     });
   }
 };
@@ -43,7 +45,18 @@ export const DeviceData = async (
   if (!userExists) {
     throw errors.USER_NOT_FOUND;
   } else {
-    if (userExists?.heartBeat.length > 10 || userExists?.airQuality > 10) {
+    const tempratureStatus =
+      temprature > 92 && temprature < 95
+        ? "low"
+        : temprature > 99
+        ? "high"
+        : "normal";
+
+    const airQualityIndex = parseInt(airQuality) < 150 ? "Good" : "Poor";
+    if (
+      userExists?.heartBeat.length > 10 ||
+      userExists?.airQuality.length > 10
+    ) {
       await db.updateOne(
         { deviceID: deviceID },
         { $pop: { heartBeat: -1, airQuality: -1 } }
@@ -57,6 +70,8 @@ export const DeviceData = async (
           humidity: humidity,
           location: location,
           status: true,
+          tempratureStatus: tempratureStatus,
+          airQualityIndex: airQualityIndex,
         },
         $push: {
           heartBeat: heartBeat,
@@ -70,11 +85,18 @@ export const DeviceData = async (
 export const getDeviceData = async (userString: string) => {
   const db = await DatabaseService.getInstance().getDb("devices", "vitalWatch");
   let userData;
-  if (userString === "all") {
-    userData = await db.find({}).toArray();
-  } else {
-    userData = await db.find({ deviceID: userString }).toArray();
-  }
+  const userExists = await db.findOne({
+    deviceID: userString,
+  });
+  if (userExists || userString === "all") {
+    if (userString === "all") {
+      userData = await db.find({}).toArray();
+    } else {
+      userData = await db.find({ deviceID: userString }).toArray();
+    }
 
-  return userData;
+    return userData;
+  } else {
+    throw errors.USER_NOT_FOUND;
+  }
 };
