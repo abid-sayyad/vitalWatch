@@ -8,20 +8,23 @@ const DashboardCard: React.FC<DeviceDataType> = (props) => {
     <Link href={status ? `/miner/${deviceID}` : "/"} className="">
       <div className={`${status}`}>
         <div
-          className={`flex-col flex  p-4 border border-blue-500 rounded-md main cursor-pointer`}
+          className={`flex-col flex  p-4 border border-blue-500 rounded-md main cursor-pointer min-h-[138px]`}
         >
           <h1 className="text-2xl ">{deviceAlias}</h1>
           <h2>ID: {deviceID}</h2>
           <span className=" flex items-center justify-start">
-            Device is{" "}
+            Status is{" "}
             {status ? (
-              <Status status={"online"} key={deviceID} />
+              <>
+                <Status status={"online"} key={deviceID} />
+                {(props?.airQualityIndex === "Poor" ||
+                  props?.tempratureStatus === "high") && (
+                  <Status status="danger" />
+                )}
+              </>
             ) : (
               <Status status={"offline"} key={deviceID} />
             )}
-          </span>
-          <span className=" flex items-center justify-start">
-            Status : <Status status={"good"} key={deviceID} />
           </span>
         </div>
       </div>
