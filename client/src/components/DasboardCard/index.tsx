@@ -8,20 +8,27 @@ const DashboardCard: React.FC<DeviceDataType> = (props) => {
     <Link href={status ? `/miner/${deviceID}` : "/"} className="">
       <div className={`${status}`}>
         <div
-          className={`flex-col flex  p-4 border border-blue-500 rounded-md main cursor-pointer`}
+          className={`flex-col flex  p-4 border border-blue-500 rounded-md main cursor-pointer min-h-[138px]`}
         >
           <h1 className="text-2xl ">{deviceAlias}</h1>
           <h2>ID: {deviceID}</h2>
           <span className=" flex items-center justify-start">
-            Device is{" "}
+            Status is{" "}
             {status ? (
-              <Status status={"online"} key={deviceID} />
+              <>
+                <Status status={"online"} key={deviceID} />
+                {(props?.airQualityIndex === "Poor" ||
+                  props?.tempratureStatus === "high") && (
+                  <Status status="danger" />
+                )}
+                {props?.airQualityIndex !== "Poor" &&
+                  props?.tempratureStatus !== "high" && (
+                    <Status status="good" />
+                  )}
+              </>
             ) : (
               <Status status={"offline"} key={deviceID} />
             )}
-          </span>
-          <span className=" flex items-center justify-start">
-            Status : <Status status={"good"} key={deviceID} />
           </span>
         </div>
       </div>
@@ -37,7 +44,7 @@ const Status: React.FC<{
       {status === "good" && (
         <>
           <div className=" flex items-center justify-center mx-2 h-[0.5rem] w-[0.5rem] rounded-full bg-green-500"></div>
-          <p className="text-green-500">Good</p>
+          <p className="text-green-500">Healthy</p>
         </>
       )}
       {status === "warn" && (

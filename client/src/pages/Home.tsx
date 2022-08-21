@@ -48,9 +48,6 @@ const Home: React.FC = () => {
           {devices?.map((device) => (
             <>
               <DashboardCard {...device} key={device._id} />
-              <DashboardCard {...device} key={device._id} />
-              <DashboardCard {...device} key={device._id} />
-              <DashboardCard {...device} key={device._id} />
             </>
           ))}{" "}
         </section>

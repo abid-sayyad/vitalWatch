@@ -10,8 +10,8 @@ const Device: React.FC = () => {
       const formData = {
         deviceID: e.target.elements.id.value,
         deviceAlias: e.target.elements.alias.value,
-        weight: e.target.elements.height.value,
-        height: e.target.elements.weight.value,
+        weight: e.target.elements.weight.value,
+        height: e.target.elements.height.value,
         age: e.target.elements.age.value,
         bloodGroup: e.target.elements.bloodGroup.value,
       };
