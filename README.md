@@ -6,5 +6,6 @@ Our IoT device gathers data like health vitals, Geo-location and environment con
 We made a realtime connection between the hardware and the software to monitor every possible threat to the worker's life. By using sensors like MQ-X, we are able to receive environmental data like CO, CH4. C2H2 percentage in the Environment, so that we can predict any chances of suffocation to the worker.
 
 We Built VitalWatch using Arduino Mega, SIM 900A, GSM Module, MQ-X Gas sensors, DT11, Temperature and Humidity Sensors, IR contact Less Temperature Sensor and heart Beat Monitor. Our realtime portal is made using React and Express. 
+
 ---
-### Winner of Hack a Day by MLH and SkynetHacks
+### Winner in Hack a Day by MLH and SkynetHacks
