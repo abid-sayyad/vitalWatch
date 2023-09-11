@@ -1,10 +1,12 @@
 import React from "react";
 import { Text, View } from "./Themed";
+import { StyleSheet } from "react-native";
 
 export const DeviceDetailsCard = (device: {
   icon: string;
   nickname: string;
   code: string;
+  showDetails?: boolean;
 }) => {
   return (
     <View className="bg-[#DAE3E8] p-4 w-80 rounded-[30px] px-5 my-3">
@@ -26,6 +28,45 @@ export const DeviceDetailsCard = (device: {
           <Text className="text-gray-300">Healthy</Text>
         </View>
       </View>
+      {device.showDetails ? (
+        <View style={styles.grid} className="ml-7">
+          <View style={styles.column} className="bg-[#DAE3E8]">
+            <Text>
+              <Text className="font-bold">Height:</Text> 1.78m
+            </Text>
+            <Text>
+              <Text className="font-bold">Weight:</Text>80kg
+            </Text>
+          </View>
+          <View style={styles.column} className="bg-[#DAE3E8]">
+            <Text>
+              <Text className="font-bold">Blood Group:</Text> O+
+            </Text>
+            <Text>
+              <Text className="font-bold">Gender:</Text> Male
+            </Text>
+          </View>
+        </View>
+      ) : null}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+  },
+  grid: {
+    flexDirection: "row", // To create a horizontal layout
+    flexWrap: "wrap", // Allows items to wrap to the next row
+  },
+  column: {
+    width: "50%", // Two columns in a row, adjust as needed
+  },
+  separator: {
+    marginVertical: 30,
+    height: 1,
+    width: "80%",
+  },
+});
