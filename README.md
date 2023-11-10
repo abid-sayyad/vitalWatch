@@ -7,5 +7,8 @@ We made a realtime connection between the hardware and the software to monitor e
 
 We Built VitalWatch using Arduino Mega, SIM 900A, GSM Module, MQ-X Gas sensors, DT11, Temperature and Humidity Sensors, IR contact Less Temperature Sensor and heart Beat Monitor. Our realtime portal is made using React and Express. 
 
+Demo : 
+https://vimeo.com/741570722
+
 ---
 ### Winner in Hack a Day by MLH and SkynetHacks
